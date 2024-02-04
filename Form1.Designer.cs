@@ -82,6 +82,7 @@
             this.btnVirgula.TabIndex = 2;
             this.btnVirgula.Text = ",";
             this.btnVirgula.UseVisualStyleBackColor = true;
+            this.btnVirgula.Click += new System.EventHandler(this.btnVirgula_Click);
             // 
             // btnUm
             // 
