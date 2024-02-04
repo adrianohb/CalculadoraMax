@@ -1,0 +1,5 @@
+﻿A construção começou em 09:17...
+1>------ Compilação iniciada: Projeto: Formulario, Configuração: Debug Any CPU ------
+1>  Formulario -> C:\HOFFMANN\Programacao C#\Programas desenvolvidos\CalculadoraMax\bin\Debug\Formulario.exe
+========== Compilação: 1 bem-sucedida, 0 com falha, 0 atualizada, 0 ignorada ==========
+========== Compilação concluído às 09:17 e levou 01,182 segundos ==========
