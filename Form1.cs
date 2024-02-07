@@ -16,32 +16,36 @@ namespace Formulario
         public FormularioCalculadora()
         {
             InitializeComponent();
+
+            // Captura todos os eventos de teclas antes dos componetes filhos.
+            this.KeyPreview = true;
         }
 
         decimal valor1;
         decimal valor2;
         string operacao;
         decimal resultadoOperacao;
+        bool precisaLimparTela = false;
 
         private void adcionarNumero(int numero)
-        {                     
+        {
 
             decimal valor = decimal.Parse(txtResultado.Text);
 
-            if (valor == 0)
+            if (valor == 0 || precisaLimparTela)
             {
+                precisaLimparTela = false;
                 txtResultado.Clear();
-                txtResultado.Text = (txtResultado.Text + numero);
+
             }
-            else
-                txtResultado.Text = (txtResultado.Text + numero);
+
+            txtResultado.Text = (txtResultado.Text + numero);
         }
 
         private void cliqueOperacao(string calculo)
         {
             valor1 = decimal.Parse(txtResultado.Text);
-            txtResultado.Clear();
-            txtResultado.Text = ("0");
+            precisaLimparTela = true;
             operacao = calculo;
         }
 
@@ -50,7 +54,7 @@ namespace Formulario
             if (txtResultado.Text == ("0,"))
                 txtResultado.Text = ("0,1");
             else
-            adcionarNumero(1);
+                adcionarNumero(1);
         }
 
         private void btnDois_Click(object sender, EventArgs e)
@@ -59,7 +63,6 @@ namespace Formulario
                 txtResultado.Text = ("0,2");
             else
                 adcionarNumero(2);
-           
         }
 
         private void btnTres_Click(object sender, EventArgs e)
@@ -132,7 +135,6 @@ namespace Formulario
             operacao = "";
             valor1 = 0;
             valor2 = 0;
-
         }
 
         private void btnSomar_Click(object sender, EventArgs e)
@@ -157,30 +159,33 @@ namespace Formulario
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
+            // Atribui o segundo valor que está na tela na variável valor2
+            valor2 = decimal.Parse(txtResultado.Text);
+
             if (operacao == "+")
             {
-                valor2 = decimal.Parse(txtResultado.Text);
                 resultadoOperacao = (valor1 + valor2);
-                txtResultado.Text = resultadoOperacao.ToString();
             }
-            if (operacao == "-")
+            else if (operacao == "-")
             {
-                valor2 = decimal.Parse(txtResultado.Text);
                 resultadoOperacao = (valor1 - valor2);
-                txtResultado.Text = resultadoOperacao.ToString();
             }
-            if (operacao == "*")
+            else if (operacao == "*")
             {
-                valor2 = decimal.Parse(txtResultado.Text);
                 resultadoOperacao = (valor1 * valor2);
-                txtResultado.Text = resultadoOperacao.ToString();
             }
-            if (operacao == "/")
-            { 
-                valor2 = decimal.Parse(txtResultado.Text);
-                resultadoOperacao = (valor1/ valor2);
-                txtResultado.Text = resultadoOperacao.ToString() ;
-            }    
+            else if (operacao == "/")
+            {
+                if (valor2 == 0)
+                {
+                    // Se o segundo número for zero, para de executar o programa e aguarda usuário digitar novo valor.
+                    return;
+                }
+                resultadoOperacao = (valor1 / valor2);
+            }
+
+            // Mostra o resultado da operação no txtResultado
+            txtResultado.Text = resultadoOperacao.ToString();
 
         }
 
@@ -189,9 +194,44 @@ namespace Formulario
 
             if (txtResultado.Text == "0")
                 txtResultado.Text = ("0,");
-                 
+
             else
-               txtResultado.Text = (txtResultado.Text + ",");
+                txtResultado.Text = (txtResultado.Text + ",");
+        }
+
+        // Executa quando o usuário digita uma tecla
+        private void FormularioCalculadora_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Se o usuário apertar o número no teclado
+            if (e.KeyChar == '0')
+                adcionarNumero(0);
+            else if (e.KeyChar == '1')
+                adcionarNumero(1);
+            else if (e.KeyChar == '2')
+                adcionarNumero(2);
+            else if (e.KeyChar == '3')
+                adcionarNumero(3);
+            else if (e.KeyChar == '4')
+                adcionarNumero(4);
+            else if (e.KeyChar == '5')
+                adcionarNumero(5);
+            else if (e.KeyChar == '6')
+                adcionarNumero(6);
+            else if (e.KeyChar == '7')
+                adcionarNumero(7);
+            else if (e.KeyChar == '8')
+                adcionarNumero(8);
+            else if (e.KeyChar == '9')
+                adcionarNumero(9);
+            else if (e.KeyChar == '+')
+                cliqueOperacao("+");
+            else if (e.KeyChar == '-')
+                cliqueOperacao("-");
+            else if (e.KeyChar == '*')
+                cliqueOperacao("*");
+            else if (e.KeyChar == '/')
+                cliqueOperacao("/");
+
         }
     }
 }
